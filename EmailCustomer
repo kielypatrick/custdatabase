@@ -1,0 +1,42 @@
+#!/bin/bash
+
+# a script for emailing customers using addresses in the system database
+ 
+echo "****************************************"
+echo "*******************E-mail Menu**********"
+echo "****************************************"
+
+end=0
+while [ $end -ne 1 ]
+do
+	echo Please choose one of the following..
+	echo -e '\t' 1: Email selected customer\(s\)
+	echo -e '\t' 2: Email ALL customers
+	echo -e '\n' '\t' 0: \exit
+	echo " Enter a number.."
+	read input
+
+case $input in
+1) ./AddRecip
+./SendEmail
+exit ;;
+
+2) grep . CustDetails | awk '{print $1}'
+grep . CustDetails | awk '{print $1}' >> EmailRecips
+#all email addresses in the database are found and sent to a file EmailRecips,
+#this file is accessed by the SendEmail script
+./SendEmail
+exit;;
+0) clear
+exit
+esac
+
+done
+echo Please enter customer name/alias/email/phone no.
+echo 
+read  cust
+grep "$cust" CustDetails | awk '{print $1}'
+
+
+exit
+

@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# a script to execute sending an email
+
+echo Enter Subject
+read subject
+
+#create variable dest containg all desired recipients
+
+dest=$(cat EmailRecips)
+echo Enter CC recipients, or just press enter to skip. 
+echo Enter Message Body and hit Ctrl+D to complete sending.  
+
+mail -s "$subject" $dest
+
+#clear Recipients file for future emails
+rm ~/CustDatabase/EmailRecips
+
+echo sending...sent!
+echo Press Enter to Contine
+read pause
+clear
+

@@ -1,0 +1,23 @@
+#!/bin/bash
+
+
+echo Enter Phone Number
+read $Tel
+case $Tel in
+*[a-z]* | [A-Z])      
+        echo Phone number must contain numbers duh!
+	./PhoneTest
+	exit
+;;
+*)
+	echo "$email $name $Alias $Add1 $Add2 $Add3 $County $Tel" >>~CustDetails
+        echo Saved!
+        echo Press Enter to Contine
+        read pause
+        clear
+        exit
+
+;;
+esac
+
+

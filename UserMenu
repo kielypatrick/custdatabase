@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# a script to diplay menu options
+
+end=0
+while [ $end -ne 1 ]
+do
+	echo Please choose one of the following..
+	echo -e '\t' 1: Add a Customer
+	echo -e '\t' 2: Remove a Customer
+	echo -e '\t' 3: Search Customers
+	echo -e '\t' 4: E-mail a Customer
+	echo -e '\t' 0: \exit
+	echo " Enter a number.."
+	read input
+
+case $input in
+1) ./AddCust;;
+2) ./RemCust;;
+3) ./FindCust;;
+4) ./EmailCustomer;;
+0) exit
+esac
+
+done

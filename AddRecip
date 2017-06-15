@@ -1,0 +1,63 @@
+#!/bin/bash
+
+# a script for adding recipients to an email
+# all recipients selected are added to the EmailRecips file
+
+echo Adding Recipient...
+echo Please enter customer name/alias/email/phone no.
+read  id
+check=$(echo $id | wc -c) 
+until [ $check -ge 2 ]
+do
+        echo No input detected. Please try again.
+        echo -e '\n' Please enter customer name/alias/email/phone no.
+        read  id
+        check=$(echo $id | wc -c) 
+
+done
+entries=$(grep "$id" CustDetails | wc -l)
+if [ $entries -gt 1 ]
+then
+	echo " ====================="
+	echo Multiple Entries Found..
+	grep "$id" CustDetails
+	echo " ====================="
+	echo Please type email of the Customer  
+	read id
+	grep $id CustDetails | awk '{print $1}'
+	grep $id CustDetails | awk '{print $1}' >> EmailRecips
+
+else
+	grep "$id" CustDetails | awk '{print $1}'
+	grep "$id" CustDetails | awk '{print $1}' >> EmailRecips
+
+fi
+echo Do you wish to add another recipient?
+read response
+#create loop to allow the user to enter multiple customers
+while [ $response = Y ] || [ $response = y ]
+do	
+	echo Adding Recipient...
+	echo Please enter customer name/alias/email/phone no.
+	read  id
+	entries=$(grep "$id" CustDetails | wc -l)
+	if [ $entries -gt 1 ]
+	then
+		echo " ====================="
+		echo Multiple Entries Found..
+		grep "$id" CustDetails
+		echo " ====================="
+		echo Please type email of the Customer  
+		read id
+		grep $id CustDetails | awk '{print $1}'
+		grep $id CustDetails | awk '{print $1}' >> EmailRecips
+	else
+		grep "$id" CustDetails | awk '{print $1}'
+		grep "$id" CustDetails | awk '{print $1}' >> EmailRecips
+	
+	fi
+echo Do you wish to add another recipient?
+read response
+
+done
+

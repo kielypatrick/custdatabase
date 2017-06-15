@@ -1,0 +1,108 @@
+#!/bin/bash
+
+# a script for adding new customers to the system
+
+echo Please enter customer email address
+read email
+
+#create a file to analyse entered text in isolation
+echo "$email" >> TempCustEmail
+
+# programme checks to make sure a valid email format in entered
+input1=$( grep "@" TempCustEmail | wc -w )
+input2=$( grep "\." TempCustEmail | wc -w )
+
+if [ "$input2" -ne 1 ] || [ "$input1" -ne 1 ];
+
+then
+	echo "Invalid email. Must be of format ****@***.*** and contain no spaces" 
+# clear check file so it does not interfere with future checks
+	rm TempCustEmail
+# return to AddCust script
+	./AddCust
+	exit
+
+fi
+# clear check file so it does not interfere with future checks
+rm ~/CustDatabase/TempCustEmail
+
+echo Please enter customer name
+read name
+#check some text has been entered
+check=$(echo $name | wc -c) 
+until [ $check -ge 2 ]
+do
+        echo No input detected. Please try again.
+
+        read  id
+        check=$(echo $id | wc -c) 
+
+done
+
+echo Alias?
+read Alias
+echo Please enter customer customer address
+echo Line 1
+read Add1
+#check some text has been entered
+check=$(echo $Add1 | wc -c) 
+until [ $check -ge 2 ]
+do
+        echo No input detected. Please try again.
+        
+        read  id
+        check=$(echo $id | wc -c) 
+
+done
+
+echo Address Line 2
+read Add2
+#check some text has been entered
+check=$(echo $Add2 | wc -c) 
+until [ $check -ge 2 ]
+do
+        echo No input detected. Please try again.
+        
+        read  id
+        check=$(echo $id | wc -c) 
+
+done
+
+echo Address Line 3 \(option\)
+read Add3
+echo County 
+read County
+#check some text has been entered
+check=$(echo $County | wc -c) 
+until [ $check -ge 2 ]
+do
+        echo No input detected. Please try again.
+        
+        read  id
+        check=$(echo $id | wc -c) 
+
+done
+
+echo Please enter customer phone number
+read Tel
+# check this is a number 
+
+#case $Tel in
+#*[a-z]* | [A-Z])      
+#        echo Phone number must contain numbers duh!
+#        ./PhoneTest
+#        exit
+#;;
+#*)
+       # send data to CustDetails file
+	echo "$email $name $Alias $Add1 $Add2 $Add3 $County $Tel" >>CustDetails
+	echo Saved!
+	echo Press Enter to Contine
+	read pause
+	clear
+	exit
+#;;
+#esac
+
+
+

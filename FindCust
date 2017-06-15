@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# a script for adding new customers to the system
+
+echo "*******  SEARCH CUSTOMERS *******"
+echo Please enter customer name/alias/email/phone no.
+read  id
+check=$(echo $id | wc -c) 
+until [ $check -ge 2 ]
+do
+        echo No input detected. Please try again.
+        echo -e '\n' Please enter customer name/alias/email/phone no.
+        read  id
+        check=$(echo $id | wc -c) 
+
+done
+
+
+echo "Results:"
+grep -i "$id" CustDetails | wc -l
+echo "->>"
+grep -i "$id" CustDetails
+echo "***********************************************************"
+echo Press Enter to Contine
+read pause
+clear
+
+exit
+

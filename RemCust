@@ -1,0 +1,73 @@
+#!/bin/bash
+
+# a script for removing obsolete customers from the system
+
+echo "*******  REMOVE CUSTOMERS *******"
+echo Please enter customer name/alias/email/phone no.
+read  id
+check=$(echo $id | wc -c) 
+until [ $check -ge 2 ]
+do
+	echo No input detected. Please try again.
+	echo -e '\n' Please enter customer name/alias/email/phone no.
+	read  id
+	check=$(echo $id | wc -c) 
+
+done
+# count results to make avoid multiple deltions
+entries=$(grep -i "$id" CustDetails | wc -l)
+if [ $entries -gt 1 ]
+then
+	echo " ====================="
+	echo Multiple Entries Found..
+	grep -i "$id" CustDetails
+	echo " ====================="
+	echo Please type email of the Customer to be removed	
+	read email
+	grep $email CustDetails
+
+# confirm deletion and create updated CustDetails file
+
+	echo Remove this Customer? Y/N
+	read response
+	if [ $response = Y ] || [ $response = y ]
+	then
+       		grep -v  "$email" CustDetails > /tmp/custDetails
+        	mv /tmp/custDetails CustDetails
+	else
+		clear
+        	exit
+
+	fi
+
+elif [ $entries -eq 0 ]
+then
+	echo " ====================="
+	echo No entries Found..
+	echo " ====================="
+	exit
+
+else
+grep -i "$id" CustDetails
+
+# confirm deletion and create updated CustDetails file
+echo Remove this Customer? Y/N
+read response
+	if [ $response = Y ] || [ $response = y ]
+	then
+        	grep -v  "$id" CustDetails > /tmp/custDetails
+        	mv /tmp/custDetails CustDetails
+	else
+		clear
+        	exit
+
+fi
+
+fi
+
+echo Done!
+echo Press Enter to Contine
+read pause
+clear
+
+exit

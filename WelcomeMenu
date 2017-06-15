@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# a script to diplay welcome message to UserName.
+# given the appearance of being a security measure
+
+clear 
+echo Halt! Who goes there?
+echo Enter Your Name:
+read name
+echo Hello $name
+./UserMenu
+exit
